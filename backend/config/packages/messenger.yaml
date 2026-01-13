@@ -1,0 +1,16 @@
+framework:
+    messenger:
+        transports:
+            async: 'redis://redis:6379/messages'
+
+        routing:
+            'App\Message\SendEmailNotification': async
+            'App\Message\IndexDealInElasticsearch': async
+            'App\Message\ExportDealsToExcel': async
+            'App\Message\SyncWithAmoCrm': async
+
+        buses:
+            messenger.bus.default: []
+
+            # Route your messages to the transports
+            # 'App\Message\YourMessage': async
