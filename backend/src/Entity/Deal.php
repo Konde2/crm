@@ -19,15 +19,21 @@ class Deal
     #[ORM\Column(type: 'uuid', unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+    
+    #[Groups(['deal:read'])]
+    #[ORM\Id, ORM\Column(type: 'uuid'), ORM\GeneratedValue]
     private Uuid $id;
 
-    #[ORM\Column(length: 255)]
+    #[Groups(['deal:read', 'deal:write'])]
     #[Assert\NotBlank]
+    #[ORM\Column(length: 255)]
     private string $title;
 
+    #[Groups(['deal:read', 'deal:write'])]
     #[ORM\Column(length: 20, enumType: DealStage::class)]
     private DealStage $stage;
 
+    #[Groups(['deal:read', 'deal:write'])]
     #[ORM\Column(length: 20, enumType: DealPriority::class)]
     private DealPriority $priority;
 
@@ -63,22 +69,24 @@ class Deal
     #[ORM\JoinColumn(nullable: false)]
     private User $createdBy;
 
+    #[Groups(['deal:read'])]
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private User $assignedTo;
 
-    #[ORM\Column(length: 255)]
+    #[Groups(['deal:read', 'deal:write'])]
     #[Assert\NotBlank]
+    #[ORM\Column(length: 255)]
     private string $contactName;
 
+    #[Groups(['deal:read', 'deal:write'])]
+    #[Assert\NotBlank, Assert\Regex('/^\+?[\d\s\-\(\)]+$/')]
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank]
-    #[Assert\Regex('/^\+?[\d\s\-\(\)]+$/')]
     private string $contactPhone;
 
+    #[Groups(['deal:read', 'deal:write'])]
+    #[Assert\Email, Assert\NotBlank]
     #[ORM\Column(length: 255)]
-    #[Assert\Email]
-    #[Assert\NotBlank]
     private string $contactEmail;
 
     /**
