@@ -37,8 +37,10 @@ security:
 
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/login/oauth, roles: PUBLIC_ACCESS }
+        - { path: ^/api/docs, roles: PUBLIC_ACCESS }   # ← Swagger UI
+        - { path: ^/api/openapi, roles: PUBLIC_ACCESS } # ← OpenAPI JSON
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 
 # security:
